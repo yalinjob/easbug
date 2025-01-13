@@ -4,6 +4,7 @@ WORKDIR $WORKDIR
 COPY package*.json $WORKDIR
 RUN npm install --production 
 
+
 FROM node:12-alpine
 ENV USER node
 ENV WORKDIR /home/$USER/app
