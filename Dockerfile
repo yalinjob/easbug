@@ -3,7 +3,8 @@ FROM node:12-alpine AS builder
 ENV WORKDIR /usr/src/app
 WORKDIR $WORKDIR
 COPY package*.json $WORKDIR
-RUN npm install --production && echo "Install completed" && ls -la $WORKDIR
+RUN npm install --production && echo "Contents of /usr/src/app:" && ls -la /usr/src/app
+
 
 # Stage 2: Python runtime
 FROM python:rc-alpine3.13
