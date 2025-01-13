@@ -1,32 +1,26 @@
 # Stage 1: Builder Stage
-FROM node:12-alpine as builder
+FROM maven:3.8.7-eclipse-temurin-17 as builder
 
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+# Copy pom.xml and download dependencies
+COPY pom.xml ./
+RUN mvn dependency:resolve
 
-# Install dependencies
-RUN npm install --production
-
-# Debug: Verify that node_modules exists
-RUN echo "Checking node_modules in builder stage:" && ls -al /usr/src/app/node_modules
+# Copy source code and build the application
+COPY src ./src
+RUN mvn package -DskipTests
 
 # Stage 2: Final Image
-FROM node:12-alpine
+FROM eclipse-temurin:17-jre-alpine
 
-WORKDIR /home/node/app
+WORKDIR /home/app
 
-# Copy node_modules from the builder stage
-COPY --from=builder /usr/src/app/node_modules ./node_modules
+# Copy the built JAR file from the builder stage
+COPY --from=builder /usr/src/app/target/*.jar ./app.jar
 
-# Debug: Verify node_modules was copied
-RUN echo "Checking node_modules in final stage:" && ls -al ./node_modules
+# Expose the application port (adjust as needed)
+EXPOSE 8080
 
-# Copy the rest of the application
-COPY . .
-
-# Set permissions for the working directory
-RUN chown -R node:node /home/node/app
-
-EXPOSE 22
+# Run the application
+CMD ["java", "-jar", "app.jar"]
