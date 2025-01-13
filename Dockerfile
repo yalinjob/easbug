@@ -9,8 +9,8 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install --production
 
-# Debug: Verify node_modules exists
-RUN ls -al /usr/src/app
+# Debug: Verify that node_modules exists
+RUN echo "Checking node_modules in builder stage:" && ls -al /usr/src/app/node_modules
 
 # Stage 2: Final Image
 FROM node:12-alpine
@@ -21,7 +21,7 @@ WORKDIR /home/node/app
 COPY --from=builder /usr/src/app/node_modules ./node_modules
 
 # Debug: Verify node_modules was copied
-RUN ls -al ./node_modules
+RUN echo "Checking node_modules in final stage:" && ls -al ./node_modules
 
 # Copy the rest of the application
 COPY . .
