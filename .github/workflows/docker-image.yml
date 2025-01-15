@@ -37,9 +37,7 @@ jobs:
           jf docker push ${REPO_URL}/easbug:${{ github.run_number }}
 
 
-      - name: Scan Build
-        run: | 
-          jf bs ${{ vars.BUILD_NAME }} $GITHUB_RUN_NUMBER --fail=false --vuln --format table --rescan
+ 
 
       - name: Evidence on docker
         run: |
@@ -57,6 +55,11 @@ jobs:
 
       - name: Publish build info
         run: jfrog rt build-publish
+
+      - name: Scan Build
+        run: | 
+          jf bs ${{ vars.BUILD_NAME }} $GITHUB_RUN_NUMBER --fail=false --vuln --format table --rescan
+
         
       - name: Sign build evidence
         run: |
