@@ -33,8 +33,8 @@ jobs:
           URL=$(echo ${{ vars.ARTIFACTORY_URL }} | sed 's|^https://||')
           REPO_URL=${URL}/${REPO_NAME}
           # Adding --no-cache to ensure a fresh build without using cache
-          docker build --no-cache -t ${REPO_URL}/easbug:${{ github.run_number }} .
-          jf docker push ${REPO_URL}/easbug:${{ github.run_number }}
+          docker build --no-cache -t ${REPO_URL}/example-go-app:${{ github.run_number }} .
+          jf docker push ${REPO_URL}/example-go-app:${{ github.run_number }}
 
 
  
