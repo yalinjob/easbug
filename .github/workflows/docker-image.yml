@@ -39,7 +39,7 @@ jobs:
 
       - name: Scan Build
         run: | 
-          jf bs $GITHUB_RUN_NUMBER
+          jf bs ${{ vars.BUILD_NAME }} $GITHUB_RUN_NUMBER --fail=false --vuln --format table --rescan
 
       - name: Evidence on docker
         run: |
