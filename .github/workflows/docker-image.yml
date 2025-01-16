@@ -58,7 +58,7 @@ jobs:
 
       - name: Scan Build
         run: | 
-          jf s ${{ secrets.BUILD_NAME }} $GITHUB_RUN_NUMBER --fail=false --vuln --format table --rescan
+          jf scan ${{ secrets.BUILD_NAME }} $GITHUB_RUN_NUMBER --fail=false --vuln --format table --rescan
 
         
       - name: Sign build evidence
