@@ -58,7 +58,8 @@ jobs:
 
       - name: Scan Build
         run: | 
-          jf build-scan ${{ secrets.BUILD_NAME }} $GITHUB_RUN_NUMBER --fail=false --vuln --format table --rescan
+          jf build-scan Docker-build-with-evidence-easbug-ya 31 --fail=false --vuln --format table --rescan
+
 
         
       - name: Sign build evidence
