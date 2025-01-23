@@ -35,6 +35,7 @@ jobs:
           # Adding --no-cache to ensure a fresh build without using cache
           docker build --no-cache -t ${REPO_URL}/example-go-app:${{ github.run_number }} .
           jf docker push ${REPO_URL}/example-go-app:${{ github.run_number }}
+          jf docker scan ${REPO_URL}/example-go-app:${{ github.run_number }}
 
 
  
